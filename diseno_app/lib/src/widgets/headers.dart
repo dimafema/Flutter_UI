@@ -103,3 +103,40 @@ class _HeaderTrianguloPaiter extends CustomPainter {
     return true;
   }
 }
+
+class Headertriangulo1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity, //debemos dar al container todo el alto del dispositivo y..
+      width:  double.infinity, //todo el ancho del dispositivo
+      //color:  Color(0xff615AAB),
+      child: CustomPaint(
+        painter: _HeaderTrianguloPaiter1(),
+      ),  
+    );
+  }
+}
+
+class _HeaderTrianguloPaiter1 extends CustomPainter {
+  @override                
+  void paint(Canvas canvas, Size size) {
+    final lapiz = new Paint();    
+    lapiz.color =       Color(0xff615AAB); 
+    lapiz.style =       PaintingStyle.fill;
+    lapiz.strokeWidth = 15; 
+    final path = Path(); 
+    
+    path.lineTo(0,size.height*0.3);
+    path.lineTo(size.width*0.5, size.height*0.4); 
+    path.lineTo(size.width*1, size.height*0.3); 
+    path.lineTo(size.width*0, size.height*-1000); 
+    canvas.drawPath(path, lapiz); 
+
+  
+  }
+@override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
