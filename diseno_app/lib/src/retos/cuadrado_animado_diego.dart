@@ -4,11 +4,13 @@ class CuadradoAnimadoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //hemos centrado el cuadrado tanto en vertical como horizontal respecto la pantalla
       body: Center(child: _CuadradoAnimado()),
     );
   }
 }
 
+//Extraemos el widget y le damos un stateful por que tiene movimientos
 class _CuadradoAnimado extends StatefulWidget {
   @override
   __CuadradoAnimadoState createState() => __CuadradoAnimadoState();
@@ -17,42 +19,46 @@ class _CuadradoAnimado extends StatefulWidget {
 class __CuadradoAnimadoState extends State<_CuadradoAnimado>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  //animaciones
+  //creamos las variable de las animaciones
   Animation<double> moverDerecha;
   Animation<double> moverArriba;
   Animation<double> moverIzquierda;
   Animation<double> moverAbajo;
+  Animation<double> moverDerecha1;
+  Animation<double> moverArriba1;
   @override
   void initState() {
-    // Inicializar
+    // Inicializamos la animación
     super.initState();
     controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 4500));
-        //damos una duración de cuatro segundo y medio
-    // Movimiento de las variables
-    //eje X positivo es izquierda    eje  Y
-    moverDerecha = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
-    //Empezamos en su posición inicial y termina 100 px de la pantalla hacia la derecha
-        parent: controller, curve: Interval(0, 0.25, curve: Curves.bounceOut)));
-    //intrervalo de entrada y salida, rango 0 inicio a 1 que es fin 
-    //entramos en 0 y salimos en el primer cuarto de la animación
+
+    moverDerecha = Tween(begin: 0.0, end: 145.0).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(0.0, 0.1666, curve: Curves.bounceOut)));
+
+    moverArriba = Tween(begin: 0.0, end: -274.0).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(0.1666, 0.3333, curve: Curves.bounceOut)));
+
+    moverIzquierda = Tween(begin: 0.0, end: -290.0).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(0.3333, 0.5, curve: Curves.bounceOut)));
+
+    moverAbajo = Tween(begin: 0.0, end: 575.0).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(0.5, 0.6665, curve: Curves.bounceOut)));
+
+    moverDerecha1 = Tween(begin: 0.0, end: 290.0).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(0.6665, 0.8331, curve: Curves.bounceOut)));
     
-    //Empezamos en la posición última y termina -100 px de la pantalla hacia arriba en positivo es hacia abajo
-    moverArriba = Tween(begin: 0.0, end: -100.0).animate(CurvedAnimation(
+    moverArriba1 = Tween(begin: 0.0, end: -274.0).animate(CurvedAnimation(
         parent: controller,
-        curve: Interval(0.25, 0.5, curve: Curves.bounceOut)));
-
-    moverIzquierda = Tween(begin: 0.0, end: -100.0).animate(CurvedAnimation(
-        parent: controller,
-        curve: Interval(0.5, 0.75, curve: Curves.bounceOut)));
-
-    moverAbajo = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
-        parent: controller,
-        curve: Interval(0.75, 1.0, curve: Curves.bounceOut)));
-
+        curve: Interval(0.8331, 1.0, curve: Curves.bounceOut)));
     controller.addListener(() {
       if (controller.status == AnimationStatus.completed) {
-        controller.reset();
+        //controller.reset();
       }
     });
   }
@@ -74,8 +80,8 @@ class __CuadradoAnimadoState extends State<_CuadradoAnimado>
       builder: (BuildContext context, Widget child) {
         return Transform.translate(
             offset: Offset(
-              moverDerecha.value + moverIzquierda.value,
-              moverArriba.value + moverAbajo.value,
+              moverDerecha.value + moverIzquierda.value + moverDerecha1.value,
+              moverArriba.value + moverAbajo.value + moverArriba1.value,
             ),
             child: child);
       },
@@ -86,6 +92,7 @@ class __CuadradoAnimadoState extends State<_CuadradoAnimado>
 class _Rectangulo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Creamos el container con las dimensiones y le damos el color
     return Container(
       width: 70,
       height: 70,

@@ -1,4 +1,6 @@
-import 'package:diseno_app/src/retos/cuadrado_animado_page.dart';
+
+//HE IMPORTADO EL PAQUETE DE MI ARCHIVO
+import 'package:diseno_app/src/retos/cuadrado_animado_diego.dart';
 import 'package:flutter/material.dart';
 
 
