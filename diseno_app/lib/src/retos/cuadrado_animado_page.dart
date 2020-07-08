@@ -28,10 +28,17 @@ class __CuadradoAnimadoState extends State<_CuadradoAnimado>
     super.initState();
     controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 4500));
+        //damos una duración de cuatro segundo y medio
+    // Movimiento de las variables
+    //eje X positivo es izquierda    eje  Y
     moverDerecha = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
+    //Empezamos en su posición inicial y termina 100 px de la pantalla hacia la derecha
         parent: controller, curve: Interval(0, 0.25, curve: Curves.bounceOut)));
-
-    moverArriba = Tween(begin: 0.25, end: -100.0).animate(CurvedAnimation(
+    //intrervalo de entrada y salida, rango 0 inicio a 1 que es fin 
+    //entramos en 0 y salimos en el primer cuarto de la animación
+    
+    //Empezamos en la posición última y termina -100 px de la pantalla hacia arriba en positivo es hacia abajo
+    moverArriba = Tween(begin: 0.0, end: -100.0).animate(CurvedAnimation(
         parent: controller,
         curve: Interval(0.25, 0.5, curve: Curves.bounceOut)));
 

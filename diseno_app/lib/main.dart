@@ -1,6 +1,7 @@
-import 'package:diseno_app/src/retos/cuadrado_animado_page.dart';
+//HE IMPORTADO EL PAQUETE DE MI ARCHIVO
+import 'package:diseno_app/src/pages/circular_progress_page.dart';
+//import 'package:diseno_app/src/retos/cuadrado_animado_diego.dart';
 import 'package:flutter/material.dart';
-
 
 //import 'package:diseno_app/src/pages/animaciones_pages.dart';
 //import 'package:diseno_app/src/pages/headers_page.dart';
@@ -14,6 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Diseños app',
-        home: CuadradoAnimadoPage());
+        home: CircularProgressPage());
   }
 }
