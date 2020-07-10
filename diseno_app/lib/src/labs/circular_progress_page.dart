@@ -102,7 +102,5 @@ class _MiRadialProgress extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    throw UnimplementedError();
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
