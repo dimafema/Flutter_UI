@@ -5,8 +5,17 @@ import 'dart:ui';
 
 class RadialProgress extends StatefulWidget {
   final porcentaje;
+  final Color colorPrimario;
+  final Color colorSecundario;
+  final double grosorCirculo;
+  final double grosorAvance;
 
-  const RadialProgress({Key key, this.porcentaje});
+  const RadialProgress(
+      {@required this.porcentaje,
+      this.colorPrimario = Colors.blueAccent,
+      this.colorSecundario = Colors.grey,
+      this.grosorCirculo = 10,
+      this.grosorAvance = 8});
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -46,7 +55,13 @@ class _RadialProgressState extends State<RadialProgress>
           width: double.infinity,
           height: double.infinity,
           child: CustomPaint(
-            painter: _MiRadialProgress((widget.porcentaje - diferenciaAnimar)+ (diferenciaAnimar* controller.value)),
+            painter: _MiRadialProgress(
+                (widget.porcentaje - diferenciaAnimar) +
+                    (diferenciaAnimar * controller.value),
+                widget.colorPrimario,
+                widget.colorSecundario,
+                widget.grosorCirculo,
+                widget.grosorAvance),
           ),
         );
       },
@@ -56,14 +71,19 @@ class _RadialProgressState extends State<RadialProgress>
 
 class _MiRadialProgress extends CustomPainter {
   final porcentaje;
-  _MiRadialProgress(this.porcentaje);
+  final colorPrimario;
+  final colorSecundario;
+  final grosorCirculo;
+  final grosorAvance;
+  _MiRadialProgress(this.porcentaje, this.colorPrimario, this.colorSecundario,
+      this.grosorCirculo, this.grosorAvance);
 
   @override
   void paint(Canvas canvas, Size size) {
     //diseñamos el lápiz del círulo
     final paint = new Paint()
-      ..strokeWidth = 4 //grosor
-      ..color = Colors.grey //color
+      ..strokeWidth = grosorCirculo //grosor
+      ..color = colorSecundario //color
       ..style = PaintingStyle.stroke; //relleno
 
     //Diseñamos el círculo
@@ -76,8 +96,8 @@ class _MiRadialProgress extends CustomPainter {
 
     //diseñamos el lápiz del arco
     final paintArco = new Paint()
-      ..strokeWidth = 10 //grosor
-      ..color = Colors.pink //color
+      ..strokeWidth = grosorAvance //grosor
+      ..color = colorPrimario //color
       ..style = PaintingStyle.stroke; //relleno
 
     //parte del arco que se debe llenar

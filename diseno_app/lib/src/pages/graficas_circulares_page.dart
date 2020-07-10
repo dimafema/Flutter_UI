@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:diseno_app/src/widgets/radial_progress.dart';
+//import 'package:diseno_app/src/widgets/headers.dart';
 
 class GraficasCircularesPage extends StatefulWidget {
- 
-
   @override
   _GraficasCircularesPageState createState() => _GraficasCircularesPageState();
 }
@@ -26,17 +24,70 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
             });
           },
         ),
-        body: Center(
-            child: Container(
-                width: 400,
-                height: 400,
-                //color: Colors.red,
-                child: RadialProgress(porcentaje: porcentaje)
-                //       child: Text(
-                //   '$porcentaje %',
-                //   style: TextStyle(fontSize: 50.0),
-                // ),
-                //     ))
-                )));
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  CustomRadialProgress(
+                    porcentaje: porcentaje,
+                    colorPrimario: Colors.blue,
+                    colorSecundario: Colors.purple,
+                  ),
+                  CustomRadialProgress(
+                    porcentaje: porcentaje,
+                    colorPrimario: Colors.red,
+                    colorSecundario: Colors.green,
+                  ),
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  CustomRadialProgress(
+                    porcentaje: porcentaje,
+                    colorPrimario: Colors.pink,
+                    colorSecundario: Colors.blue,
+                  ),
+                  CustomRadialProgress(
+                    porcentaje: porcentaje,
+                    colorPrimario: Colors.purple,
+                    colorSecundario: Colors.red,
+                  ),
+                ])
+          ],
+        ));
+  }
+}
+
+class CustomRadialProgress extends StatelessWidget {
+  final Color colorPrimario;
+  final Color colorSecundario;
+  const CustomRadialProgress(
+      {@required this.porcentaje,
+      @required this.colorPrimario,
+      @required this.colorSecundario});
+
+  final double porcentaje;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 170,
+        height: 170,
+        //color: Colors.red,
+        child: RadialProgress(
+          porcentaje: porcentaje,
+          colorPrimario: this.colorPrimario,
+          colorSecundario: this.colorSecundario,
+          grosorCirculo: 2,
+          grosorAvance: 5,
+        )
+        //       child: Text(
+        //   '$porcentaje %',
+        //   style: TextStyle(fontSize: 50.0),
+        // ),
+        //     ))
+        );
   }
 }
