@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:diseno_app/src/widgets/radial_progress.dart';
-//import 'package:diseno_app/src/widgets/headers.dart';
 
 class GraficasCircularesPage extends StatefulWidget {
   @override
