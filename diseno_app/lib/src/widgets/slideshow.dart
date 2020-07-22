@@ -2,30 +2,42 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-
 class Slideshow extends StatelessWidget {
   final List<Widget> slides;
   final bool puntosArriba;
   final Color colorPrimario;
   final Color colorSecundario;
-  Slideshow({
-  @required this.slides, 
-  this.puntosArriba = false, 
-  this.colorPrimario = Colors.blue, 
-  this.colorSecundario = Colors.grey});
+  final double bulletPrimario;
+  final double bulletSecundario;
+  Slideshow(
+      {@required this.slides,
+      this.puntosArriba = false,
+      this.colorPrimario = Colors.blue,
+      this.colorSecundario = Colors.grey,
+      this.bulletPrimario = 12,
+      this.bulletSecundario = 12});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (_) => _SliderhowModel(),
         child: SafeArea(
-          child: Center(
-              child: Builder(builder: (BuildContext context) { 
-                Provider.of<_SliderhowModel>(context)._coloPrimario = this.colorPrimario;
-                Provider.of<_SliderhowModel>(context)._colorSecudario = this.colorSecundario;
-                return CrearEstructura(puntosArriba: puntosArriba, slides: slides);
-               },)
-          ),
+          child: Center(child: Builder(
+            builder: (BuildContext context) {
+              Provider.of<_SliderhowModel>(context)._coloPrimario =
+                  this.colorPrimario;
+              Provider.of<_SliderhowModel>(context)._colorSecudario =
+                  this.colorSecundario;
+              Provider.of<_SliderhowModel>(context)._bulletPrimario =
+                  this.bulletPrimario;
+              Provider.of<_SliderhowModel>(context)._bulletSecundario =
+                  this.bulletSecundario;
+              return CrearEstructura(
+                puntosArriba: puntosArriba,
+                slides: slides,
+              );
+            },
+          )),
         ));
   }
 }
@@ -43,19 +55,16 @@ class CrearEstructura extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-            if (this.puntosArriba) 
-            _Dots(this.slides.length),
-            Expanded(child: _Slides(this.slides)),
-            if (!this.puntosArriba) 
-            _Dots(this.slides.length),
-          ]
-          );
+      if (this.puntosArriba) _Dots(this.slides.length),
+      Expanded(child: _Slides(this.slides)),
+      if (!this.puntosArriba) _Dots(this.slides.length),
+    ]);
   }
 }
 
 class _Dots extends StatelessWidget {
   final int totalSlides;
-  
+
   _Dots(this.totalSlides);
 
   @override
@@ -66,30 +75,41 @@ class _Dots extends StatelessWidget {
       //color: Colors.red,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(this.totalSlides, (i) => _Dot(i,))),
+          children: List.generate(
+              this.totalSlides,
+              (i) => _Dot(
+                    i,
+                  ))),
     );
   }
 }
 
 class _Dot extends StatelessWidget {
   final int index;
-  
+
   _Dot(this.index);
 
   @override
   Widget build(BuildContext context) {
-    //final pageActualIndex = Provider.of<_SliderModel>(context).currentPage;
     final ssMoldel = Provider.of<_SliderhowModel>(context);
+    double tamano = 0;
+    Color color;
+    if (ssMoldel.currentPage >= index - 0.5 &&
+        ssMoldel.currentPage < index + 0.5) {
+      tamano = ssMoldel.bulletPrimario;
+      color = ssMoldel.colorPrimario;
+    } else {
+      tamano = ssMoldel._bulletSecundario;
+      color = ssMoldel._colorSecudario;
+    }
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
-      width: 12,
-      height: 12,
+      width: tamano,
+      height: tamano,
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
-          color:
-              (ssMoldel.currentPage >= index - 0.5 && ssMoldel.currentPage < index + 0.5)
-                  ? ssMoldel._coloPrimario 
-                  : ssMoldel._colorSecudario,
+          color: color,
           shape: BoxShape.circle),
     );
   }
@@ -145,26 +165,40 @@ class _Slide extends StatelessWidget {
   }
 }
 
-
 class _SliderhowModel with ChangeNotifier {
   double _currentPage = 0;
   Color _coloPrimario = Colors.blue;
   Color _colorSecudario = Colors.grey;
+  double _bulletPrimario = 12;
+  double _bulletSecundario = 12;
+
   double get currentPage => this._currentPage;
   set currentPage(double pagina) {
     this._currentPage = pagina;
     notifyListeners();
   }
- Color get colorPrimario => this._coloPrimario;
+
+  Color get colorPrimario => this._coloPrimario;
   set colorPrimario(Color color) {
     this._coloPrimario = color;
-    notifyListeners();
-  } 
+    //notifyListeners();
+  }
+
   Color get colorSegundario => this._colorSecudario;
   set colorSecundario(Color color) {
     this._coloPrimario = color;
-    notifyListeners();
+    //notifyListeners();
   }
 
+  double get bulletPrimario => this._bulletPrimario;
+  set bulletPrimario(double bullet) {
+    this._bulletPrimario = bullet;
+    //notifyListeners();
+  }
 
+  double get bulletSecundario => this._bulletSecundario;
+  set bulletSecundario(double bullet) {
+    this._bulletSecundario = bullet;
+    //notifyListeners();
+  }
 }
